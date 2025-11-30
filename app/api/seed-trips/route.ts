@@ -210,7 +210,7 @@ export async function GET(request: NextRequest) {
         
         // Check if user already exists
         const { data: existingUser } = await supabaseServer.auth.admin.listUsers()
-        const userExists = existingUser?.users.some(u => u.email === traveler.email)
+        const userExists = existingUser?.users.some((u: { email?: string }) => u.email === traveler.email)
         
         if (!userExists) {
           const { data: authData, error: authError } = await supabaseServer.auth.admin.createUser({

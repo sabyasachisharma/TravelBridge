@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const user = users.find(u => u.email === email)
+    const user = users.find((u: { email?: string }) => u.email === email)
 
     // Always return success even if user doesn't exist (security best practice)
     if (!user) {

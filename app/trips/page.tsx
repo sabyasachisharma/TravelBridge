@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState, useMemo, useRef } from 'react'
-import dynamic from 'next/dynamic'
+import { useEffect, useState, useMemo, useRef, Suspense } from 'react'
+import dynamicImport from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader, MapPin, Package, Calendar, Scale, Plane, User, Users, ArrowRight, Search, Filter, LogOut, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -12,7 +12,7 @@ import PublicNav from '@/components/PublicNav'
 import { supabaseClient } from '@/lib/supabase'
 
 // Dynamically import map to avoid SSR issues
-const RouteMap = dynamic(() => import('@/components/RouteMap'), { 
+const RouteMap = dynamicImport(() => import('@/components/RouteMap'), { 
   ssr: false,
   loading: () => (
     <div className="h-full w-full rounded-lg border border-slate-200 bg-slate-100 flex items-center justify-center">
@@ -21,7 +21,7 @@ const RouteMap = dynamic(() => import('@/components/RouteMap'), {
   )
 })
 
-export default function TripsPage() {
+function TripsPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [allTrips, setAllTrips] = useState<any[]>([])
@@ -497,5 +497,17 @@ export default function TripsPage() {
 
       {/* Modal removed: details open on dedicated page */}
     </div>
+  )
+}
+
+export default function TripsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-teal-600" />
+      </div>
+    }>
+      <TripsPageContent />
+    </Suspense>
   )
 }

@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
         )
       }
 
-      const user = users.find(u => u.email === email)
+      const user = users.find((u: { email?: string }) => u.email === email)
 
       if (!user) {
         return NextResponse.json(

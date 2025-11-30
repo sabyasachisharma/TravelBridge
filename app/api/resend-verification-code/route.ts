@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to find user' }, { status: 500 })
     }
 
-    const user = users.find(u => u.email === email)
+    const user = users.find((u: { email?: string }) => u.email === email)
 
     if (!user) {
       // Don't reveal if user exists for security

@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabaseClient } from '@/lib/supabase'
 import { AlertCircle, Loader, CheckCircle, Mail, Lock, User } from 'lucide-react'
 import Logo from '@/components/Logo'
 
-export default function AuthPage() {
+function AuthPageContent() {
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -385,5 +385,17 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-teal-600" />
+      </div>
+    }>
+      <AuthPageContent />
+    </Suspense>
   )
 }

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabaseClient } from '@/lib/supabase'
-import { LogOut, Shield, CheckCircle, AlertCircle, Mail, Plane, Package, Users, TrendingUp, Calendar, MapPin, Star, Activity, ArrowRight, User, Clock, Award, Settings, X, Globe } from 'lucide-react'
+import { LogOut, Shield, CheckCircle, AlertCircle, Mail, Plane, Package, Users, TrendingUp, Calendar, MapPin, Star, Activity, ArrowRight, User, Clock, Award, Settings, X, Globe, Loader } from 'lucide-react'
 import VerificationModal from '@/components/VerificationModal'
 import Logo from '@/components/Logo'
 import AppNav from '@/components/AppNav'
@@ -50,7 +50,7 @@ const LANGUAGE_MAP: { [key: string]: string } = {
   'da': 'Danish',
 }
 
-export default function Dashboard() {
+function DashboardContent() {
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
@@ -685,5 +685,17 @@ export default function Dashboard() {
         onClose={() => setShowVerificationModal(false)} 
       />
     </div>
+  )
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-gray-600" />
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   )
 }

@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { supabaseClient } from '@/lib/supabase'
 import { AlertCircle, Loader, CheckCircle, Mail } from 'lucide-react'
 
-export default function VerifyEmailPage() {
+function VerifyEmailPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const email = searchParams?.get('email') || ''
@@ -232,6 +232,18 @@ export default function VerifyEmailPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-teal-50 to-cyan-50 flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-teal-600" />
+      </div>
+    }>
+      <VerifyEmailPageContent />
+    </Suspense>
   )
 }
 
