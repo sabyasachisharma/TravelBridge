@@ -72,7 +72,11 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-```https://travelbridge.vercel.app/```
+---
+
+## 🌐 Live Demo
+
+Visit the live application: [https://travelbridge.vercel.app/](https://travelbridge.vercel.app/)
 
 ---
 
