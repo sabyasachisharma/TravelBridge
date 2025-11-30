@@ -72,12 +72,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-## 🚀 Deploy to Vercel
-
-1. Push to GitHub
-2. Import project in [Vercel](https://vercel.com)
-3. Add environment variables from `.env.local`
-4. Deploy
+```https://travelbridge.vercel.app/```
 
 ---
 
